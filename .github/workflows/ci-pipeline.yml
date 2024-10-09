@@ -60,7 +60,7 @@ jobs:
 
   instrumentation-test:
     name: Perform Instrumentation Testing
-    runs-on: macos-latest  # MacOS für schnellere Tests
+    runs-on: macos-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -74,7 +74,10 @@ jobs:
       - name: Run espresso tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 35
+          api-level: 30  # Verwende API 30 für mehr Stabilität
+          target: default
+          profile: Nexus 6
+          emulator-options: -no-snapshot -no-boot-anim
           script: ./gradlew connectedCheck
 
       - name: Upload Instrumentation Test report
@@ -83,17 +86,6 @@ jobs:
           name: instrumentation_test_report
           path: app/build/reports/androidTests/connected
 
-      - name: Run espresso tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 35
-          script: ./gradlew connectedCheck
-
-      - name: Upload Instrumentation Test report
-        uses: actions/upload-artifact@v4
-        with:
-          name: instrumentation_test_report
-          path: app/build/reports/androidTests/connected
 
   static-code-analysis:
     name: Perform static code analysis
