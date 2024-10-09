@@ -10,4 +10,8 @@ interface ApiService {
     // Getting the sensor data
     @GET
     suspend fun getSensorData(@Url sensorUrl: String): SensorData
+
+    // Getting the data from the past 24h
+    @GET
+    suspend fun getSensorDataLast24Hours(@Url sensorUrl: String) : List<SensorData>
 }

@@ -29,4 +29,9 @@ class SensorRepository(
     suspend fun getSensorData(sensor: Sensor): SensorData{
         return apiService.getSensorData(sensor.url)
     }
+
+    // Gets the sensor data of the last 24 hours through the api
+    suspend fun getSensorDataLast24Hours(sensor: Sensor): List<SensorData> {
+        return apiService.getSensorDataLast24Hours("${sensor.url}/history")
+    }
 }

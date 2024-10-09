@@ -9,6 +9,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 
 class SensorRepositoryTest {
@@ -21,6 +22,30 @@ class SensorRepositoryTest {
     @Before
     fun setUp() {
         repository = SensorRepository(sensorDao, apiService)
+    }
+
+    @Test
+    fun testInsertSensor() = runBlocking {
+        // Arrange
+        val sensor = Sensor(name = "New Sensor", url = "http://example.com")
+
+        // Act
+        repository.insertSensor(sensor)
+
+        // Assert
+        verify(sensorDao).insertSensor(sensor)
+    }
+
+    @Test
+    fun testDeleteSensor() = runBlocking {
+        // Arrange
+        val sensor = Sensor(name = "Old Sensor", url = "http://example.com")
+
+        // Act
+        repository.deleteSensor(sensor)
+
+        // Assert
+        verify(sensorDao).deleteSensor(sensor)
     }
 
     @Test
@@ -50,5 +75,26 @@ class SensorRepositoryTest {
         assertEquals(22.5f, sensorData.temperature)
         assertEquals(45.3f, sensorData.humidity)
         assertEquals("2024-10-08T12:34:56", sensorData.timestamp)
+    }
+
+    @Test
+    fun testGetSensorDataLast24Hours() = runBlocking {
+        // Arrange
+        val sensor = Sensor(name = "Living Room", url = "http://example.com")
+        val mockSensorDataList = listOf(
+            SensorData(temperature = 22.0f, humidity = 40.0f, timestamp = "2024-10-08T10:00:00"),
+            SensorData(temperature = 23.5f, humidity = 42.0f, timestamp = "2024-10-08T11:00:00"),
+            SensorData(temperature = 24.0f, humidity = 43.5f, timestamp = "2024-10-08T12:00:00")
+        )
+        `when`(apiService.getSensorDataLast24Hours("${sensor.url}/history")).thenReturn(mockSensorDataList)
+
+        // Act
+        val sensorDataList = repository.getSensorDataLast24Hours(sensor)
+
+        // Assert
+        assertEquals(3, sensorDataList.size)
+        assertEquals(22.0f, sensorDataList[0].temperature)
+        assertEquals(23.5f, sensorDataList[1].temperature)
+        assertEquals(24.0f, sensorDataList[2].temperature)
     }
 }
