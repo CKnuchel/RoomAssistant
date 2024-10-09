@@ -11,6 +11,7 @@ composeBom = "2024.09.03"
 room = "2.6.1"
 retrofit2 = "2.11.0"
 gson = "2.11.0"
+mockito = "5.14.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +33,7 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-room-testing = { group = "androidx.room", name =  "room-testing", version.ref = "room" }
+androidx-mockito-android = { group = "org.mockito", name = "mockito-android", version.ref = "mockito" }
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit2" }
 gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "gson"}
 
