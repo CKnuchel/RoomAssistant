@@ -1,10 +1,11 @@
-package com.example.roomassistant.model.dao
+package com.roomassistant.model.dao
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.roomassistant.model.Sensor
+import com.example.roomassistant.model.dao.SensorDao
 import com.example.roomassistant.model.database.SensorDatabase
 import kotlinx.coroutines.runBlocking
 import org.junit.After
