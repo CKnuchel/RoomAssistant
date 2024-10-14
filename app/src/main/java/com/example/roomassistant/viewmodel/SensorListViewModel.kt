@@ -18,8 +18,8 @@ class SensorListViewModel(
     val sensorList: LiveData<List<Sensor>> = _sensorList
 
     // Sensor data
-    private val _sensordata = MutableLiveData<SensorData>()
-    val sensorData: LiveData<SensorData> = _sensordata
+    private val _sensorData = MutableLiveData<SensorData>()
+    val sensorData: LiveData<SensorData> = _sensorData
 
     // Live data for error messages
     private val _error = MutableLiveData<String>()
@@ -66,7 +66,7 @@ class SensorListViewModel(
         viewModelScope.launch {
             try {
                 val updatedSensorData = repository.getSensorData(sensor)
-                _sensordata.value = updatedSensorData
+                _sensorData.value = updatedSensorData
             } catch (e: Exception) {
                 "Failed refreshing the sensor data".also { _error.value = it }
             }
